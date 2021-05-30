@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define L long long
+#define L long
 
 static const auto x=[](){
     std::ios::sync_with_stdio(false);
@@ -10,24 +10,24 @@ static const auto x=[](){
     return nullptr;
 }();
 
-L setBitNumber(L n){
-    L res = 0;
-    while(n!=0) {
-        res++;
-        n=n>>1;
-    }
-    return 1<<(res-1);
-}
-
-// L setBitNumber(L n) { 
-//     n |= n >> 1; 
-//     n |= n >> 2; 
-//     n |= n >> 4; 
-//     n |= n >> 8; 
-//     n |= n >> 16; 
-//     n = n + 1; 
-//     return (n >> 1); 
+// L setBitNumber(L n){
+//     L res = 0;
+//     while(n!=0) {
+//         res++;
+//         n=n>>1;
+//     }
+//     return 1<<(res-1);
 // }
+
+L setBitNumber(L n) { 
+    n |= n >> 1; 
+    n |= n >> 2; 
+    n |= n >> 4; 
+    n |= n >> 8; 
+    n |= n >> 16; 
+    n = n + 1; 
+    return (n >> 1); 
+}
 
 
 void print(vector<L> &arr){
@@ -56,16 +56,12 @@ int main(){
                         arr[n-1] ^=1;
                     }
                     break;
-                }else{
-                    ++i;
-                    continue;   
-                }
+                }else   ++i;
             }else{
                 L sbt = setBitNumber(arr[i]);
                 L j=i+1;
                 
-                while(j<n-1 && (arr[j]==0 || !(sbt&arr[j]) ))
-                    ++j;
+                while(j<n-1 && (arr[j]==0 || !(sbt&arr[j]) ))   ++j;
                 arr[i]^=sbt;
                 arr[j]^=sbt;
                 --x;
